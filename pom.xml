@@ -15,6 +15,9 @@
 
   <properties>
     <java.version>17</java.version>
+
+    <!--suppress UnresolvedMavenProperty -->
+    <spring-boot.build-image.imageName>bitxon/${project.artifactId}:mvn-buildpack-${git.commit.id}</spring-boot.build-image.imageName>
   </properties>
 
   <dependencies>
@@ -60,8 +63,7 @@
         <configuration>
           <!-- https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image.examples.custom-image-name -->
           <image>
-            <!--suppress UnresolvedMavenProperty -->
-            <name>bitxon/${project.artifactId}:mvn-buildpack-${git.commit.id}</name>
+            <name>${spring-boot.build-image.imageName}</name>
             <publish>false</publish>
           </image>
           <docker>
