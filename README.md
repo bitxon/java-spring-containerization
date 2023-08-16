@@ -41,6 +41,10 @@ docker build -f docker/Dockerfile.gradlew-multistage -t containerized-app:gradle
 ```bash
 ./gradlew bootBuildImage --imageName=containerized-app:gradle-buildpack
 ```
+```bash
+# Build image with git commit id as version
+./gradlew bootBuildImage
+```
 
 ### Maven
 From JAR
@@ -59,4 +63,8 @@ docker build -f docker/Dockerfile.mvnw-multistage -t containerized-app:mvnw-mult
 [Build Plugin](https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image.examples)
 ```bash
 ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=containerized-app:mvn-buildpack
+```
+```bash
+# Build image with git commit id as version
+./mvnw spring-boot:build-image
 ```

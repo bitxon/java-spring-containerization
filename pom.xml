@@ -37,8 +37,40 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>io.github.git-commit-id</groupId>
+        <artifactId>git-commit-id-maven-plugin</artifactId>
+        <version>6.0.0</version>
+        <configuration>
+          <includeOnlyProperties>
+            <includeOnlyProperty>git.commit.id</includeOnlyProperty>
+            <includeOnlyProperty>git.branch</includeOnlyProperty>
+          </includeOnlyProperties>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>build-info</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <!-- https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#build-image.examples.custom-image-name -->
+          <image>
+            <!--suppress UnresolvedMavenProperty -->
+            <name>bitxon/${project.artifactId}:mvn-buildpack-${git.commit.id}</name>
+            <publish>false</publish>
+          </image>
+          <docker>
+            <publishRegistry>
+              <username>REPLACE_WITH_REAL_USER_NAME</username>
+              <password>REPLACE_WITH_REAL_PASSWORD</password>
+            </publishRegistry>
+          </docker>
+        </configuration>
       </plugin>
     </plugins>
   </build>

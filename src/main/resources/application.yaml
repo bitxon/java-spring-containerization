@@ -1,3 +1,17 @@
 server.port: 8080
 
-management.server.port: 8081
+
+management:
+  server.port: 8081
+  endpoints.web.exposure.include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+      probes:
+        enabled: true # probes on local env (by default they enable on k8s env only)
+      group:
+        readiness:
+          include: ping
+        liveness:
+          include: diskSpace
+
