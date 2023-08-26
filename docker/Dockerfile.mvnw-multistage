@@ -1,10 +1,10 @@
-FROM openjdk:17.0.1-jdk-slim AS build
+FROM azul/zulu-openjdk-alpine:17.0.6 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY .mvn/wrapper/ .mvn/wrapper/
 COPY mvnw .
 RUN chmod +x mvnw
-RUN ./mvnw -B dependency:resolve dependency:resolve-plugins
+RUN ./mvnw -B -Daether.dependencyCollector.impl=bf dependency:go-offline
 COPY src/ src/
 COPY .git/ .git/
 RUN ./mvnw -B clean package
