@@ -4,6 +4,7 @@ COPY build.gradle .
 COPY settings.gradle .
 RUN gradle dependencies --no-daemon
 COPY src/ src/
+COPY .git/ .git/
 RUN gradle build --no-daemon
 
 

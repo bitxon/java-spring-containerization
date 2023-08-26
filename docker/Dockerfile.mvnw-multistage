@@ -5,7 +5,8 @@ COPY .mvn/wrapper/ .mvn/wrapper/
 COPY mvnw .
 RUN chmod +x mvnw
 RUN ./mvnw -B dependency:resolve dependency:resolve-plugins
-COPY src/ /app/src/
+COPY src/ src/
+COPY .git/ .git/
 RUN ./mvnw -B clean package
 
 FROM azul/zulu-openjdk-alpine:17.0.6-jre
