@@ -9,11 +9,13 @@
       * [Multistage](#multistage)
       * [Multistage (Gradle Wrapper)](#multistage-gradle-wrapper)
       * [Buildpack](#buildpack)
+      * [Jib](#jib)
     * [Maven](#maven)
       * [From Jar](#from-jar-1)
       * [Multistage](#multistage-1)
       * [Multistage (Maven Wrapper)](#multistage-maven-wrapper)
       * [Buildpack](#buildpack-1)
+      * [Jib](#jib-1)
 <!-- TOC -->
 
 
@@ -56,6 +58,11 @@ docker build -f docker/Dockerfile.gradlew-multistage -t containerized-app:gradle
 ./gradlew bootBuildImage
 ```
 
+#### [Jib](https://github.com/GoogleContainerTools/jib/blob/master/jib-gradle-plugin/README.md)
+```bash
+./gradlew jibDockerBuild --image=containerized-app:gradle-jib
+```
+
 ### Maven
 #### From Jar
 ```bash
@@ -80,4 +87,9 @@ docker build -f docker/Dockerfile.mvnw-multistage -t containerized-app:mvnw-mult
 ```bash
 # Build image with git commit id as version
 ./mvnw spring-boot:build-image
+```
+
+#### [Jib](https://github.com/GoogleContainerTools/jib/blob/master/jib-maven-plugin/README.md)
+```bash
+./mvnw compile jib:dockerBuild -Dimage=containerized-app:mvn-jib
 ```
