@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-alpine:17.0.6-jre
+FROM azul/zulu-openjdk-alpine:21.0.4-jre
 COPY target/*.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
 EXPOSE 8080/tcp

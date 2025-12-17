@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-alpine:17.0.6 AS build
+FROM azul/zulu-openjdk-alpine:21.0.4-jdk AS build
 WORKDIR /app
 COPY pom.xml .
 COPY .mvn/wrapper/ .mvn/wrapper/
@@ -9,7 +9,7 @@ COPY src/ src/
 COPY .git/ .git/
 RUN ./mvnw -B clean package
 
-FROM azul/zulu-openjdk-alpine:17.0.6-jre
+FROM azul/zulu-openjdk-alpine:21.0.4-jre
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
