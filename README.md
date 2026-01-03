@@ -137,16 +137,16 @@ docker run --rm -it --name jvm-custom --memory=2g \
 
 Buildpack Memory Calculator output for `2048 Mb` container memory with `250 threads`
 
-| Component                     | Buildpack | My Custom | Build pack defaults                              |
-|-------------------------------|-----------|-----------|--------------------------------------------------|
-| **MaxHeapSize**               | **1466**  | **1024**  | ⚡️Calculated = `Total` - `Non-Heap` - `Headroom` |
-| **MaxMetaspaceSize**          | **82** ⚠️ | **256**   | ⚡️Calculated based on class count                |
-| ↳ CompressedClassSpace        | ↳ 80      | ↳ 128     |                                                  |
-| ↳ Regular Metaspace           | ↳ 2       | ↳ 128     |                                                  |
-| **ReservedCodeCacheSize**     | **240**   | **128**   |                                                  |
-| **MaxDirectMemorySize**       | **10**    | **64**    |                                                  |
-| **ThreadStackSize** (250×1MB) | **250**   | **250**   |                                                  |
-| **Headroom**                  | **0** ⚠️  | **326**   |                                                  |
+| Component                     | Default   | Headroom 20 | My Custom | Build pack defaults                              |
+|-------------------------------|-----------|-------------|-----------|--------------------------------------------------|
+| **MaxHeapSize**               | **1466**  | **1056**    | **1024**  | ⚡️Calculated = `Total` - `Non-Heap` - `Headroom` |
+| **MaxMetaspaceSize**          | **82** ⚠️ | **82** ⚠️   | **256**   | ⚡️Calculated based on class count                |
+| ↳ CompressedClassSpace        | ↳ 80      | ↳ 80        | ↳ 128     |                                                  |
+| ↳ Regular Metaspace           | ↳ 2       | ↳ 2         | ↳ 128     |                                                  |
+| **ReservedCodeCacheSize**     | **240**   | **240**     | **128**   |                                                  |
+| **MaxDirectMemorySize**       | **10**    | **10**      | **64**    |                                                  |
+| **ThreadStackSize** (250×1MB) | **250**   | **250**     | **250**   |                                                  |
+| **Headroom**                  | **0** ⚠️  | **410**     | **326**   |                                                  |
 
 **Summary**: ✅ Tuning size of Headroom might be enough for general use cases.
 
@@ -155,6 +155,13 @@ Buildpack Memory Calculator output for `2048 Mb` container memory with `250 thre
 
 ```shell
 docker run --rm -it --name jvm-default --memory=2g \
+  -e 'JAVA_TOOL_OPTIONS=-XX:+PrintCommandLineFlags -XX:+PrintFlagsFinal' \
+  -p 8080:8080 \
+  containerized-app:gradle-buildpack
+```
+```shell
+docker run --rm -it --name jvm-headroom-20 --memory=2g \
+  -e 'BPL_JVM_HEAD_ROOM=20' \
   -e 'JAVA_TOOL_OPTIONS=-XX:+PrintCommandLineFlags -XX:+PrintFlagsFinal' \
   -p 8080:8080 \
   containerized-app:gradle-buildpack
